@@ -3,11 +3,11 @@ Snake class that represents moving snake object in game
 """
 
 import random, pygame, numpy as np
-from constants import COLOR_YELLOW, Direction, DIRECTION_LIST
+from constants import COLOR_YELLOW, COLOR_ORANGE, Direction, DIRECTION_LIST
 from utils import is_opposite_direction
 
 class Snake:
-    def __init__(self, surface_dimensions, init_len=3, segment_size=20, color=COLOR_YELLOW) -> None:
+    def __init__(self, surface_dimensions, segment_size=20, head_color=COLOR_ORANGE, body_color=COLOR_YELLOW) -> None:
         """
         Initializes snake object
 
@@ -15,18 +15,18 @@ class Snake:
         ----------
         surface_dimensions : (int, int)    
             Tuple that represents the width and height of the to be drawn surface
-        init_len : int, default = 3
-            Initial length of the snake body, including head, as in amount of segments
         segment_size : int, default = 20
             Controls the width and height of each snake's segment 
-        color: (int, int, int), default = COLOR_YELLOW
+        head_color: (int, int, int), default = COLOR_ORANGE
+            Controls the snakes color, expected RGB tuple with values ranging from 0 - 255
+        body_color: (int, int, int), default = COLOR_YELLOW
             Controls the snakes color, expected RGB tuple with values ranging from 0 - 255
         """
 
         self.surface_dimensions = surface_dimensions
-        self.init_len = init_len
         self.segment_size = segment_size
-        self.color = color
+        self.head_color = head_color
+        self.body_color = body_color
         self.direction = random.choice(DIRECTION_LIST) # Assign a random direction by default
         self.segments = [(random.randrange(round((surface_dimensions[0] // 2 - self.segment_size * 4) / self.segment_size) * self.segment_size, round((surface_dimensions[0] // 2 + self.segment_size * 4) / self.segment_size) * self.segment_size, self.segment_size),
                           random.randrange(round((surface_dimensions[1] // 2 - self.segment_size * 4) / self.segment_size) * self.segment_size, round((surface_dimensions[1] // 2 + self.segment_size * 4) / self.segment_size) * self.segment_size, self.segment_size))] # Keeps track of (x, y) coordinates of each snakes body segment
@@ -92,7 +92,14 @@ class Snake:
                     or head_pos[1] < 0 or head_pos[1] >= self.surface_dimensions[1]) or (head_pos in self.segments[1:])
         else:
             return head_pos == pt
+        
+    def get_apples_eaten(self):
+        return len(self.segments) - 1
 
     def render(self, screen) -> None:
-        for segment in self.segments:
-            pygame.draw.rect(screen, self.color, (*segment, self.segment_size, self.segment_size))
+        # Render head
+        pygame.draw.rect(screen, self.head_color, (*(self.segments[0]), self.segment_size, self.segment_size))
+
+        # Render body
+        for segment in self.segments[1:]:
+            pygame.draw.rect(screen, self.body_color, (*segment, self.segment_size, self.segment_size))
