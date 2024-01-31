@@ -20,7 +20,7 @@ COLOR_GRAY = (45, 45, 45)
 COLOR_BLACK = (0, 0, 0)
 
 # Game control parameters
-GAME_FPS = 10
+GAME_FPS = 30
 
 # Enums
 class Direction(IntEnum):
@@ -35,3 +35,17 @@ DIRECTION_LIST = list(Direction)
 REWARD_EAT = 5
 REWARD_COLLIDE = -5
 REWARD_DO_NOTHING = -0.05
+REWARD_DISCOUNT_GAMMA = 0.9
+
+# Downsampling params
+RESIZE_WINDOW_WIDTH = 128
+RESIZE_WINDOW_HEIGHT = 128
+
+# Network parameters
+NETWORK_LEARNING_RATE = 0.001
+NETWORK_OUTPUT_SIZE = 4
+NETWORK_MODEL_PATH = "./model"
+NETWORK_MODEL_NAME = "snake_agent_state.pth"
+
+REPLAY_BUFFER_SIZE = 1000
+BATCH_SIZE = 100
