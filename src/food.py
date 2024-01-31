@@ -29,6 +29,6 @@ class Food:
     def render(self, screen):
         pygame.draw.rect(screen, self.color, (*self.position, self.size, self.size))
 
-    def get_position(self) -> (int, int):
+    def get_position(self) -> tuple[int, int]:
         return self.position
 
