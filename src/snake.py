@@ -30,8 +30,6 @@ class Snake:
         self.direction = random.choice(DIRECTION_LIST) # Assign a random direction by default
         self.segments = [(random.randrange(round((surface_dimensions[0] // 2 - self.segment_size * 4) / self.segment_size) * self.segment_size, round((surface_dimensions[0] // 2 + self.segment_size * 4) / self.segment_size) * self.segment_size, self.segment_size),
                           random.randrange(round((surface_dimensions[1] // 2 - self.segment_size * 4) / self.segment_size) * self.segment_size, round((surface_dimensions[1] // 2 + self.segment_size * 4) / self.segment_size) * self.segment_size, self.segment_size))] # Keeps track of (x, y) coordinates of each snakes body segment
-        
-        print(self.segments)
 
     def update(self, key_down, grow=False) -> None:
         """
@@ -95,6 +93,9 @@ class Snake:
         
     def get_apples_eaten(self):
         return len(self.segments) - 1
+    
+    def get_head_position(self) -> tuple[int, int]:
+        return self.segments[0]
 
     def render(self, screen) -> None:
         # Render head
